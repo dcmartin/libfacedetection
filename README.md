@@ -2,9 +2,7 @@
 This repository is a fork of the [primary repository](https://github.com/ShiqiYu/libfacedetection) with minor modifications to run on Raspian Buster and Ubuntu 18+ with OpenCV. The [Open Horizon](http://github.com/dcmartin/open-horizon) _service_ [`face`](http://github.com/dcmartin/open-horizon/tree/master/face/README.md)  utilizes this repository to build Docker containers.  Please refer to the [Dockerfile](http://github.com/dcmartin/open-horizon/tree/master/face/Dockerfile) for details.
 
 ## About
-OpenFACE is an open source *face detection* library written in C++.  The library analyzes images and video streams to identify license plates.  The output is the text representation of any license plate characters.
-
-Check out a live online demo here: [http://www.openface.com/demo-image.html](http://www.openface.com/demo-image.html)
+OpenFACE is an open source *face detection* library written in C++.  The library analyzes images and video streams to identify license plates.  The output is the percentage probability for any faces detected.
 
 ## Installation
 Outside of use in building the [`face`](http://github.com/dcmartin/open-horizon/tree/master/face/README.md) _service_, see [the original](https://github.com/ShiqiYu/libfacedetection/blob/master/README.md) for instructions.
