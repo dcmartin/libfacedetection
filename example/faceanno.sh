@@ -1,9 +1,9 @@
 #!/bin/bash
 
-process_face_results()
+face_annotate()
 {
-  local json=${1}.json
-  local jpeg=${1}.jpg
+  local json=${1}
+  local jpeg=${2}
   local colors=(blue red white yellow green orange magenta cyan)
   local result
 
@@ -25,8 +25,6 @@ process_face_results()
         local right=$((left+width))
         local confidence=$(echo "${face:-null}" | jq -r '.confidence')
 
-echo "${confidence}: ${top},${left},${bottom},${right}"
-
         if [ ${i} -eq 0 ]; then
           file=${jpeg%%.*}-${i}.jpg
           cp -f ${jpeg} ${file}
@@ -36,7 +34,6 @@ echo "${confidence}: ${top},${left},${bottom},${right}"
         fi
         output=${jpeg%%.*}-$((i+1)).jpg
 
-        #convert -pointsize 24 -stroke ${colors[${count}]} -fill none -strokewidth 2 -draw "rectangle ${left},${top} ${right},${bottom} push graphic-context stroke ${colors[${count}]} fill ${colors[${count}]} translate ${right},${bottom} rotate 40 path 'M 10,0  l +15,+5  -5,-5  +5,-5  -15,+5  m +10,0 +20,0' translate 40,0 rotate -40 stroke none fill ${colors[${count}]} text 3,6 '${confidence}' pop graphic-context" ${file} ${output}
         convert -pointsize 16 -stroke ${colors[${count}]} -fill none -strokewidth 2 -draw "rectangle ${left},${top} ${right},${bottom} push graphic-context stroke ${colors[${count}]} fill ${colors[${count}]} translate ${right},${bottom} text 3,6 '${confidence}' pop graphic-context" ${file} ${output}
 
         if [ ! -s "${output}" ]; then
@@ -58,6 +55,13 @@ echo "${confidence}: ${top},${left},${bottom},${right}"
   echo "${result:-null}"
 }
 
+process_face_results()
+{
+  local json=${1}.json
+  local jpeg=${1}.jpg
+
+  echo $(face_annotate ${json} ${jpeg})
+}
 
 if [ ! -z "${*}" ]; then
   process_face_results ${*}
